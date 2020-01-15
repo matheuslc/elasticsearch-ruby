@@ -98,14 +98,14 @@ describe 'client#update' do
 
     it 'raises it to the user' do
       expect {
-        client.update(index: 'foo', type: 'bar', id: 'XXX')
+        client.update(index: 'foo', type: 'bar', id: 'XXX', body: {})
       }.to raise_exception(NotFound)
     end
 
     context 'when the :ignore parameter is specified' do
 
       it 'does not raise the error to the user' do
-        expect(client.update(index: 'foo', type: 'bar', id: 'XXX', ignore: 404)).to eq(false)
+        expect(client.update(index: 'foo', type: 'bar', id: 'XXX', body: {}, ignore: 404)).to eq(false)
       end
     end
   end
