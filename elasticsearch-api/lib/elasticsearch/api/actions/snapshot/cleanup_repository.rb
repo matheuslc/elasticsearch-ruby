@@ -4,23 +4,26 @@
 
 module Elasticsearch
   module API
-    module Cluster
+    module Snapshot
       module Actions
-        # Updates the cluster settings.
+        # Removes stale data from repository.
 
         #
-        # @option arguments [Hash] :body The settings to be updated. Can be either `transient` or `persistent` (survives cluster restart). (*Required*)
+        # @option arguments [String] :repository A repository name
+        # @option arguments [Hash] :body TODO: Description
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
-        def put_settings(arguments = {})
-          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+        def cleanup_repository(arguments = {})
+          raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
 
           arguments = arguments.clone
 
-          method = HTTP_PUT
-          path   = "_cluster/settings"
+          _repository = arguments.delete(:repository)
+
+          method = HTTP_POST
+          path   = "_snapshot/#{Utils.__listify(_repository)}/_cleanup"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
@@ -31,8 +34,7 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
-        ParamsRegistry.register(:put_settings, [
-          :flat_settings,
+        ParamsRegistry.register(:cleanup_repository, [
           :master_timeout,
           :timeout
         ].freeze)

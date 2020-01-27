@@ -6,29 +6,28 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Performs the analysis process on a text and return the tokens breakdown of the text.
+        # The _upgrade API is no longer useful and will be removed.
 
         #
-        # @option arguments [String] :index The name of the index to scope the operation
-        # @option arguments [Hash] :body Define analyzer/tokenizer parameters and the text on which the analysis should be performed
+        # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.html
         #
-        def analyze(arguments = {})
+        def get_upgrade(arguments = {})
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
 
           method = HTTP_GET
           path   = if _index
-                     "#{Utils.__listify(_index)}/_analyze"
+                     "#{Utils.__listify(_index)}/_upgrade"
                    else
-                     "_analyze"
+                     "_upgrade"
   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-          body = arguments[:body]
+          body = nil
 
           perform_request(method, path, params, body).body
         end
@@ -36,8 +35,10 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
-        ParamsRegistry.register(:analyze, [
-          :index
+        ParamsRegistry.register(:get_upgrade, [
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards
         ].freeze)
   end
       end
