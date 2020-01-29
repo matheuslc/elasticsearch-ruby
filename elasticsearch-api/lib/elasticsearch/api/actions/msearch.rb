@@ -37,6 +37,7 @@ module Elasticsearch
       # @option arguments [Number] :max_concurrent_searches Controls the maximum number of concurrent searches the multi search api will execute
       # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
       # @option arguments [Number] :pre_filter_shard_size A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
+      # @option arguments [String] :preference Specify the node or shard the operation should be performed on
       # @option arguments [Number] :max_concurrent_shard_requests The number of concurrent shard requests each sub search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
       # @option arguments [Boolean] :rest_total_hits_as_int Indicates whether hits.total should be rendered as an integer or an object in the rest search response
       # @option arguments [Boolean] :ccs_minimize_roundtrips Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
@@ -84,6 +85,7 @@ module Elasticsearch
           :max_concurrent_searches,
           :typed_keys,
           :pre_filter_shard_size,
+          :preference,
           :max_concurrent_shard_requests,
           :rest_total_hits_as_int,
           :ccs_minimize_roundtrips ].freeze)
