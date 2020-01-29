@@ -3,7 +3,7 @@
     name: elastic+elasticsearch-ruby+pull-request
     display-name: 'elastic / elasticsearch-ruby # pull-request'
     description: Testing of elasticsearch-ruby pull requests.
-    junit_results: "*-junit.xml"
+    junit_results: "elasticsearch-api/*-junit.xml"
     scm:
     - git:
         branches:
