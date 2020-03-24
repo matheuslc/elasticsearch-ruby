@@ -175,6 +175,7 @@ module Elasticsearch
           :routing,
           :scroll,
           :search_type,
+          :searc_after,
           :size,
           :sort,
           :source,
